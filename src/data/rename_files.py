@@ -1,3 +1,8 @@
+"""
+Rename filenames to lowercase and replace spaces with underscores.
+Move the directories one up.
+"""
+
 import os
 import shutil
 
