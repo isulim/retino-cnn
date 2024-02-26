@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from dotenv import load_dotenv
 
@@ -23,3 +24,8 @@ if __name__ == "__main__":
     load_dotenv()
     path = os.getenv("KAGGLE_FILES_DIR")
     rename_files(path)
+
+    # Move the directories one up
+    shutil.move(os.path.join(path, "brain_tumor_data_set", "brain_tumor_data_set", "brain_tumor"), os.path.join(path, "brain_tumor_dataset", "tumor"))
+    shutil.move(os.path.join(path, "brain_tumor_data_set", "brain_tumor_data_set", "healthy"), os.path.join(path, "brain_tumor_dataset", "healthy"))
+    shutil.rmtree(os.path.join(path, "brain_tumor_data_set"))
