@@ -241,5 +241,5 @@ fabric.properties
 mlflow/
 mlruns/
 mlartifacts/
-data/
+data/*
 .kaggle/
