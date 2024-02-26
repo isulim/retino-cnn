@@ -38,7 +38,7 @@ if __name__ == "__main__":
     download_dataset(dataset)
 
     unzip = input("Do you want to unzip the files? (Y/n): ")
-    if unzip.lower() == "y":
+    if not unzip or unzip.lower() == "y":
         unzip_dataset(api, dataset, path)
     else:
         print("Files downloaded successfully")
