@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def download_dataset(dataset):
+def download_dataset(dataset, path: str):
     api.authenticate()
     api.dataset_download_files(dataset=dataset, path=path, quiet=False, unzip=False)
 
@@ -33,15 +33,16 @@ def unzip_dataset(api, dataset, path):
 
 if __name__ == "__main__":
     path = os.getenv("KAGGLE_FILES_DIR")
-    os.makedirs(path, exist_ok=True)
+    raw_path = os.path.join(path, "raw")
+    os.makedirs(raw_path, exist_ok=True)
 
     dataset = os.getenv("KAGGLE_DATASET")
     from kaggle import api
 
-    download_dataset(dataset)
+    download_dataset(dataset, raw_path)
 
     unzip = input("Do you want to unzip the files? (Y/n): ")
     if not unzip or unzip.lower() == "y":
-        unzip_dataset(api, dataset, path)
+        unzip_dataset(api, dataset, raw_path)
     else:
         print("Files downloaded successfully")
