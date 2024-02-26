@@ -1,4 +1,8 @@
-all: download-data rename-files
+all: download-data rename-files split-data
+
+
+split-data:
+	poetry run python src/data/train_val_split.py
 
 rename-files:
 	poetry run python src/data/rename_files.py
