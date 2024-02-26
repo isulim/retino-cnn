@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "brain-cnn"
 version = "0.1.0"
-description = "An app using CNN to determine weather cancer is/not present in given brain CT scan."
+description = "An app using CNN to determine if cancer is present or not in given brain CT scan."
 authors = ["isulim <igosulim@gmail.com>"]
 license = "MIT"
 readme = "README.md"
