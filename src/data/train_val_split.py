@@ -12,5 +12,5 @@ if __name__ == "__main__":
     output_path = os.path.join(os.getenv("KAGGLE_FILES_DIR"), "processed")
     os.makedirs(output_path, exist_ok=True)
 
-    ratio(source_path, output=output_path, seed=seed, ratio=(0.8, 0.2))
-    print("Splitting folders into train and validation sets.")
+    ratio(source_path, output=output_path, seed=seed, ratio=(0.7, 0.2, 0.1))
+    print("Splitting folders into train, validation, test sets.")
