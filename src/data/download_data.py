@@ -4,23 +4,25 @@
 import os
 import zipfile
 
+from pathlib import Path
+
 from dotenv import load_dotenv
 load_dotenv()
 
 
-def download_dataset(dataset, path: str):
+def download_dataset(ds: str, output_path: str | Path):
     api.authenticate()
-    api.dataset_download_files(dataset=dataset, path=path, quiet=False, unzip=False)
+    api.dataset_download_files(dataset=ds, path=output_path, quiet=False, unzip=False)
 
 
-def unzip_dataset(api, dataset, path):
+def unzip_dataset(api, ds: str, output_path: str | Path):
     try:
-        outfile = api.split_dataset_string(dataset)[1]
-        with zipfile.ZipFile(f"{path}/{outfile}.zip") as z:
-            z.extractall(path)
+        outfile: str = api.split_dataset_string(ds)[1]
+        with zipfile.ZipFile(f"{output_path}/{outfile}.zip") as z:
+            z.extractall(output_path)
         print('Unzipped all files.')
 
-        os.remove(f"{path}/{outfile}.zip")
+        os.remove(f"{output_path}/{outfile}.zip")
         print('Deleted zip file.')
 
     except zipfile.BadZipFile as e:
@@ -32,17 +34,17 @@ def unzip_dataset(api, dataset, path):
 
 
 if __name__ == "__main__":
-    path = os.getenv("KAGGLE_FILES_DIR")
-    raw_path = os.path.join(path, "raw")
+    kaggle_dir: str = os.getenv("KAGGLE_FILES_DIR")
+    raw_path: Path = Path(kaggle_dir, "raw")
     os.makedirs(raw_path, exist_ok=True)
 
-    dataset = os.getenv("KAGGLE_DATASET")
+    dataset_name: str = os.getenv("KAGGLE_DATASET")
     from kaggle import api
 
-    download_dataset(dataset, raw_path)
+    download_dataset(dataset_name, raw_path)
 
     unzip = input("Do you want to unzip the files? (Y/n): ")
     if not unzip or unzip.lower() == "y":
-        unzip_dataset(api, dataset, raw_path)
+        unzip_dataset(api, dataset_name, raw_path)
     else:
         print("Files downloaded successfully")
