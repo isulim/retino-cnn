@@ -34,12 +34,13 @@ def unzip_dataset(api, ds: str, output_path: str | Path):
 
 
 if __name__ == "__main__":
-    kaggle_dir: str = os.getenv("KAGGLE_FILES_DIR")
+    kaggle_dir: str = os.getenv("KAGGLE_FILES_DIR", "")
     raw_path: Path = Path(kaggle_dir, "raw")
     os.makedirs(raw_path, exist_ok=True)
 
-    dataset_name: str = os.getenv("KAGGLE_DATASET")
-    from kaggle import api
+    dataset_name: str = os.getenv("KAGGLE_DATASET", "")
+
+    from kaggle import api  # type: ignore
 
     download_dataset(dataset_name, raw_path)
 

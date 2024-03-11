@@ -3,14 +3,14 @@
 import os
 from pathlib import Path
 
-from splitfolders import ratio
+from splitfolders import ratio  # type: ignore
 from dotenv import load_dotenv
 
 if __name__ == "__main__":
 
     load_dotenv()
     seed = os.getenv("SEED")
-    kaggle_dir = os.getenv("KAGGLE_FILES_DIR")
+    kaggle_dir = os.getenv("KAGGLE_FILES_DIR", "")
     source_path = Path(kaggle_dir, "raw")
     output_path = Path(kaggle_dir, "processed")
     os.makedirs(output_path, exist_ok=True)

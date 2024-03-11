@@ -29,7 +29,7 @@ def rename_files(path: Path):
 
 if __name__ == "__main__":
     load_dotenv()
-    kaggle_dir: str = os.getenv("KAGGLE_FILES_DIR")
+    kaggle_dir: str = os.getenv("KAGGLE_FILES_DIR", "")
     raw_path = Path(kaggle_dir, "raw")
     rename_files(raw_path)
 
