@@ -42,9 +42,9 @@ if __name__ == "__main__":
 
     from kaggle import api  # type: ignore
 
+    unzip = input("Do you want to unzip the files after download? (Y/n): ")
     download_dataset(dataset_name, raw_path)
 
-    unzip = input("Do you want to unzip the files? (Y/n): ")
     if not unzip or unzip.lower() == "y":
         unzip_dataset(api, dataset_name, raw_path)
     else:
