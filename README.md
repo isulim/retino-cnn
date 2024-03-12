@@ -1,5 +1,5 @@
-# brain-cnn
-An app using CNN to determine weather cancer is/not present in given brain CT scan.
+# retino-cnn
+An app using CNN to determine severity od diabetic retinopathy.
 
 ## Environment
 Dev environment is managed using `poetry`: [https://python-poetry.org](https://python-poetry.org).
@@ -10,8 +10,10 @@ poetry install
 ## Dataset
 
 ### About dataset
-`Brain Tumor Dataset` from Kaggle: [https://www.kaggle.com/datasets/preetviradiya/brian-tumor-dataset](https://www.kaggle.com/datasets/preetviradiya/brian-tumor-dataset)  
-- 4602 images, including 2513 tumor and 2087 healthy scans
+`Resized 2015 & 2019 Diabetic Retinopathy Detection` from Kaggle: [https://www.kaggle.com/datasets/c7934597/resized-2015-2019-diabetic-retinopathy-detection](https://www.kaggle.com/datasets/preetviradiya/brian-tumor-dataset)  
+- 4602 images, 
+- including 2513 tumor 
+- and 2087 healthy scans
 
 
 ### Download dataset
