@@ -1,5 +1,6 @@
-all: download-data rename-files split-data
+all: input-env download-data rename-files split-data
 
+download-rename-data: download-data rename-files
 
 split-data:
 	poetry run python src/data/train_val_test_split.py

@@ -17,5 +17,6 @@ if __name__ == "__main__":
     raw_path = Path(kaggle_dir, "raw")
     processed_path = Path(kaggle_dir, "processed")
 
-    print("Splitting folders into train, validation, test sets.")
+    print("Splitting folders into train, validation, test sets (70%/20%/10%).")
     ratio(raw_path, output=processed_path, seed=seed, ratio=(0.7, 0.2, 0.1))
+    print(f"Done - files stored in {str(processed_path)}")
