@@ -9,3 +9,6 @@ rename-files:
 
 download-data:
 	poetry run python src/data/download_data.py
+
+input-env:
+	poetry run python src/data/input_env.py
