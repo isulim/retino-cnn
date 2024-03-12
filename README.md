@@ -10,10 +10,13 @@ poetry install
 ## Dataset
 
 ### About dataset
-`Resized 2015 & 2019 Diabetic Retinopathy Detection` from Kaggle: [https://www.kaggle.com/datasets/c7934597/resized-2015-2019-diabetic-retinopathy-detection](https://www.kaggle.com/datasets/preetviradiya/brian-tumor-dataset)  
-- 4602 images, 
-- including 2513 tumor 
-- and 2087 healthy scans
+`Resized 2015 & 2019 Diabetic Retinopathy Detection` from Kaggle: [https://www.kaggle.com/datasets/c7934597/resized-2015-2019-diabetic-retinopathy-detection](https://www.kaggle.com/datasets/c7934597/resized-2015-2019-diabetic-retinopathy-detection)  
+Dataset contains 92 404 images of human retina including:
+- 67 156 healthy
+- 6 583 mild cases
+- 14 160 moderate cases
+- 2 288 severe cases
+- 2 217 proliferative cases
 
 
 ### Download dataset
@@ -21,8 +24,19 @@ To download the dataset, first create a personal Kaggle API token under
 `Settings -> Account -> API`  [https://www.kaggle.com/settings](https://www.kaggle.com/settings)  
 and store it in `${KAGGLE_CONFIG_DIR}/kaggle.json` directory (or `~/.kaggle/kaggle.json` which is default for Kaggle API).
 
-Next:
+Next run make command:
 ```bash
+make all
+```
+to input environment variables, download the dataset and split it into train, validation and test sets.   
+Alternatively, you can run each step separately:
+```bash
+make input-env # Create input environment file
 make download-dataset # Download dataset from Kaggle (with optional unzipping)
 make rename-files # Rename files to remove whitespaces and parentheses
+make split-data # Split data into train, validation and test sets
+```
+or if you have `.env` file already created:
+```bash
+make download-rename-data # Download, rename, split
 ```
