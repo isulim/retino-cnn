@@ -1,5 +1,6 @@
 """
 Remove unused CSV files and one directory with unused images.
+Create directories for each class of diabetic retinopathy and move files to their respective category.
 """
 
 import os
@@ -9,6 +10,16 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from tqdm import tqdm
+from pandas import read_csv
+
+
+DR_CLASSES = {
+    0: "healthy",
+    1: "mild",
+    2: "moderate",
+    3: "severe",
+    4: "proliferative"
+}
 
 
 def remove_unused_files(path: Path):
@@ -35,10 +46,33 @@ def rename_files(path: Path):
     images = Path(path, 'resized_traintest15_train19')
     shutil.move(images, Path(path, 'images'))
     print(f"Renamed `raw/resized_traintest15_train19` to `raw/images`")
+
     labels = Path(path, 'labels', 'traintestLabels15_trainLabels19.csv')
     shutil.move(labels, Path(path, 'labels.csv'))
     shutil.rmtree(Path(path, "labels"))
     print(f"Renamed `raw/labels/traintestLabels15_trainLabels19` to raw/labels.csv")
+
+
+def create_dr_classes(path: Path):
+    """Create directories for each class of diabetic retinopathy."""
+
+    for severity in DR_CLASSES.values():
+        os.makedirs(Path(path, severity), exist_ok=True)
+
+
+def move_images_to_categories(path: Path):
+    """Move images to their respective category directories."""
+
+    from tqdm import tqdm
+    images = Path(path, "images")
+
+    labels = read_csv(Path(path, "labels.csv"))
+
+    for image in tqdm(path.glob("*")):
+        label = labels[labels["image"] == image.stem]["level"].values[0]
+        shutil.move(image, Path(path, DR_CLASSES[label], image.name))
+
+    shutil.rmtree(images)
 
 
 if __name__ == "__main__":
@@ -49,4 +83,5 @@ if __name__ == "__main__":
 
     remove_unused_files(raw_path)
     rename_files(raw_path)
-
+    create_dr_classes(raw_path)
+    move_images_to_categories(raw_path)
