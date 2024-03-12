@@ -19,6 +19,7 @@ def unzip_dataset(api, ds: str, output_path: str | Path):
     try:
         outfile: str = api.split_dataset_string(ds)[1]
         with zipfile.ZipFile(f"{output_path}/{outfile}.zip") as z:
+            print('Unzipping all files...')
             z.extractall(output_path)
         print('Unzipped all files.')
 
