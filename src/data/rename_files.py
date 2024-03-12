@@ -45,13 +45,15 @@ def rename_files(path: Path):
     """Rename files in the directory to match the format of the labels CSV file."""
 
     images = Path(path, 'resized_traintest15_train19')
-    shutil.move(images, Path(path, 'images'))
-    print(f"Renamed `raw/resized_traintest15_train19` to `raw/images`")
+    if images.exists():
+        shutil.move(images, Path(path, 'images'))
+        print(f"Renamed `raw/resized_traintest15_train19` to `raw/images`")
 
     labels = Path(path, 'labels', 'traintestLabels15_trainLabels19.csv')
-    shutil.move(labels, Path(path, 'labels.csv'))
-    shutil.rmtree(Path(path, "labels"))
-    print(f"Renamed `raw/labels/traintestLabels15_trainLabels19` to raw/labels.csv")
+    if labels.exists():
+        shutil.move(labels, Path(path, 'labels.csv'))
+        shutil.rmtree(Path(path, "labels"))
+        print(f"Renamed `raw/labels/traintestLabels15_trainLabels19` to raw/labels.csv")
 
 
 def create_dr_classes(path: Path):
@@ -68,6 +70,7 @@ def move_images_to_categories(path: Path):
     images = Path(path, "images")
 
     labels = read_csv(Path(path, "labels.csv"))
+    print("Moving images to their respective category directories...")
     for image in tqdm(images.glob("*")):
         label = labels[labels["image"] == image.stem]["level"].values[0]
         shutil.move(image, Path(path, DR_CLASSES[label], image.name))
