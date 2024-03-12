@@ -68,8 +68,7 @@ def move_images_to_categories(path: Path):
     images = Path(path, "images")
 
     labels = read_csv(Path(path, "labels.csv"))
-
-    for image in tqdm(path.glob("*")):
+    for image in tqdm(images.glob("*")):
         label = labels[labels["image"] == image.stem]["level"].values[0]
         shutil.move(image, Path(path, DR_CLASSES[label], image.name))
 
@@ -83,6 +82,6 @@ if __name__ == "__main__":
     raw_path = Path(kaggle_dir, "raw")
 
     remove_unused_files(raw_path)
-    # rename_files(raw_path)
-    # create_dr_classes(raw_path)
-    # move_images_to_categories(raw_path)
+    rename_files(raw_path)
+    create_dr_classes(raw_path)
+    move_images_to_categories(raw_path)
