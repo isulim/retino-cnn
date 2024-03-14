@@ -15,10 +15,10 @@ from pandas import read_csv
 
 DR_CLASSES = {
     0: "healthy",
-    1: "mild",
-    2: "moderate",
-    3: "severe",
-    4: "proliferative"
+    1: "DR",
+    2: "DR",
+    3: "DR",
+    4: "DR"
 }
 
 
