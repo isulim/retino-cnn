@@ -1,5 +1,7 @@
 all: input-env download-data rename-files split-data
 
+process-data: download-data rename-files split-data
+
 download-rename-data: download-data rename-files
 
 split-data:
