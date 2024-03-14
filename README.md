@@ -18,7 +18,8 @@ Dataset contains 92 404 images of human retina including:
 - 2 288 severe cases
 - 2 217 proliferative cases  
 
-In total about 72.5% of dataset are healthy retinas and 27.5% are not-healthy with varying severity.
+In total about 72.5% of dataset are healthy retinas and 27.5% are not-healthy with varying severity.   
+I simplify this to binary classification problem: healthy vs not-healthy.
 
 ### Download dataset
 To download the dataset, first create a personal Kaggle API token under  
