@@ -66,7 +66,6 @@ def create_dr_classes(path: Path):
 def move_images_to_categories(path: Path):
     """Move images to their respective category directories."""
 
-    from tqdm import tqdm
     images = Path(path, "images")
 
     labels = read_csv(Path(path, "labels.csv"))
@@ -76,7 +75,7 @@ def move_images_to_categories(path: Path):
     print("Moving images to their respective category directories...")
     for image in tqdm(images.glob("*")):
         label = labels[labels["image"] == image.stem]["level"].values[0]
-        shutil.move(image, Path(path, DR_CLASSES[label], image.name))
+        shutil.move(image, Path(path, str(DR_CLASSES[label]), image.name))
 
     shutil.rmtree(images)
 
