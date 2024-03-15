@@ -4,7 +4,7 @@ An app using CNN to determine severity od diabetic retinopathy.
 ## Environment
 Dev environment is managed using `poetry`: [https://python-poetry.org](https://python-poetry.org).
 ```bash
-poetry install
+poetry install --with dev
 ```
 
 ## Dataset
