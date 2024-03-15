@@ -14,11 +14,11 @@ from pandas import read_csv
 
 
 DR_CLASSES = {
-    0: "healthy",
-    1: "DR",
-    2: "DR",
-    3: "DR",
-    4: "DR"
+    0: 0,
+    1: 1,
+    2: 1,
+    3: 1,
+    4: 1
 }
 
 
@@ -60,7 +60,7 @@ def create_dr_classes(path: Path):
     """Create directories for each class of diabetic retinopathy."""
 
     for severity in DR_CLASSES.values():
-        os.makedirs(Path(path, severity), exist_ok=True)
+        os.makedirs(Path(path, str(severity)), exist_ok=True)
 
 
 def move_images_to_categories(path: Path):
@@ -70,6 +70,9 @@ def move_images_to_categories(path: Path):
     images = Path(path, "images")
 
     labels = read_csv(Path(path, "labels.csv"))
+    print("Renaming labels to 0 (healthy) and 1 (diabetic retinopathy)...")
+    labels['level'] = labels['level'].map(DR_CLASSES)
+
     print("Moving images to their respective category directories...")
     for image in tqdm(images.glob("*")):
         label = labels[labels["image"] == image.stem]["level"].values[0]
