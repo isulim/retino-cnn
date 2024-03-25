@@ -43,10 +43,10 @@ if __name__ == "__main__":
 
     from kaggle import api  # type: ignore
 
-    unzip = input("Do you want to unzip the files after download? (Y/n): ")
+    print("Download start...")
     download_dataset(dataset_name, raw_path)
+    print("Files downloaded successfully.")
+    print("Unzipping files...")
+    unzip_dataset(api, dataset_name, raw_path)
+    print("Files unzipped successfully.")
 
-    if not unzip or unzip.lower() == "y":
-        unzip_dataset(api, dataset_name, raw_path)
-    else:
-        print("Files downloaded successfully")
