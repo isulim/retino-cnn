@@ -243,3 +243,5 @@ mlruns/
 mlartifacts/
 data/*
 .kaggle/
+*logs*
+models/
