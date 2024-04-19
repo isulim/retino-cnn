@@ -1,10 +1,11 @@
 [tool.poetry]
 name = "retino-cnn"
 version = "0.1.0"
-description = "An app using CNN to determine severity od diabetic retinopathy."
+description = "An app using CNN to determine existence of diabetic retinopathy."
 authors = ["isulim <igosulim@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
