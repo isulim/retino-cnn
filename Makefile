@@ -1,10 +1,10 @@
-all: configure-envs download-data rename-files split-data
+all: configure-envs download-data clean-data split-data
 
-download-and-process: download-data rename-files split-data
+download-and-process: download-data clean-data split-data
 
-process-data: rename-files split-data
+process-data: clean-data split-data
 
-download-rename-data: download-data rename-files
+download-clean-data: download-data clean-data
 
 split-data:
 	poetry run python scripts/data/train_val_test_split.py
