@@ -9,7 +9,7 @@ download-rename-data: download-data rename-files
 split-data:
 	poetry run python scripts/data/train_val_test_split.py
 
-rename-files:
+clean-data:
 	poetry run python scripts/data/rename_files.py
 
 download-data:
