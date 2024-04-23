@@ -247,3 +247,5 @@ data/*
 experiments/
 models/
 runs/
+
+!scripts/*
