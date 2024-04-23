@@ -3,7 +3,7 @@ import torch.nn as nn
 import torchmetrics as tm
 import torchvision.models as models
 
-from torch.optim import SGD, Adam
+from torch.optim import SGD, Adam, AdamW
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision.datasets import ImageFolder
@@ -18,7 +18,11 @@ class ResNetClassifier(pl.LightningModule):
         152: models.resnet152,
     }
 
-    optimizers = {"adam": Adam, "sgd": SGD}
+    optimizers = {
+        "adam": Adam,
+        "adamw": AdamW,
+        "sgd": SGD,
+    }
 
     def __init__(
             self,
