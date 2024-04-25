@@ -2,9 +2,12 @@
 An app using CNN to determine severity od diabetic retinopathy.
 
 ## Environment
-Dev environment is managed using `poetry`: [https://python-poetry.org](https://python-poetry.org).
+Environment is managed using `poetry`: [https://python-poetry.org](https://python-poetry.org).
 ```bash
 poetry install --with dev
+```
+```bash
+poetry install --with dev,test,linters
 ```
 
 ## Dataset
@@ -33,12 +36,21 @@ make all
 to input environment variables, download the dataset and split it into train, validation and test sets.   
 Alternatively, you can run each step separately:
 ```bash
-make input-env # Create input environment file
-make download-dataset # Download dataset from Kaggle (with optional unzipping)
-make rename-files # Rename files to remove whitespaces and parentheses
+make configure-envs # Configure environment file for data download
+make download-data # Download dataset from Kaggle and unzip it
+make clean-data # Remove unused files, rename files to remove whitespaces and parentheses
 make split-data # Split data into train, validation and test sets
 ```
 or if you have `.env` file already created:
 ```bash
-make download-rename-data # Download, rename, split
+make download-clean-data # Download, rename, split
+```
+
+
+## Model
+After experiments, the model chosen is `ResNet34` with `AdamW` optimizer and `BCECrossEntropy` loss function.
+Model is stored on Google Cloud Drive and can be downloaded in ONNX format or Python pickle file:
+```bash
+make model-onnx
+make model-pickle
 ```

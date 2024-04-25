@@ -245,3 +245,7 @@ data/*
 .kaggle/
 *logs*
 experiments/
+runs/
+models/
+
+!scripts/*
