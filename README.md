@@ -45,3 +45,12 @@ or if you have `.env` file already created:
 ```bash
 make download-clean-data # Download, rename, split
 ```
+
+
+## Model
+After experiments, the model chosen is `ResNet34` with `AdamW` optimizer and `BCECrossEntropy` loss function.
+Model is stored on Google Cloud Drive and can be downloaded in ONNX format or Python pickle file:
+```bash
+make model-onnx
+make model-pickle
+```
