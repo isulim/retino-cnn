@@ -247,5 +247,6 @@ data/*
 experiments/
 runs/
 models/
+.poetry_cache/
 
 !scripts/*
