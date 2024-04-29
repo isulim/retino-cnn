@@ -1,6 +1,5 @@
 from litestar import Litestar, get, post
 
-import torch
 import onnxruntime
 from PIL import Image
 
