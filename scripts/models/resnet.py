@@ -1,5 +1,5 @@
 import pytorch_lightning as pl
-import torch.nn as nn
+import torch
 import torchmetrics as tm
 import torchvision.models as models
 
@@ -14,8 +14,6 @@ class ResNetClassifier(pl.LightningModule):
         18: models.resnet18,
         34: models.resnet34,
         50: models.resnet50,
-        101: models.resnet101,
-        152: models.resnet152,
     }
 
     optimizers = {
@@ -35,6 +33,9 @@ class ResNetClassifier(pl.LightningModule):
             lr=1e-3,
             batch_size=16,
             tune_fc_only=True,
+            threshold=0.5,
+            pos_weight=None,
+            pretrained=False
     ):
         super().__init__()
 
@@ -44,21 +45,30 @@ class ResNetClassifier(pl.LightningModule):
         self.test_path = test_path
         self.lr = lr
         self.batch_size = batch_size
+        self.threshold = threshold
+
+        self.pos_weight = pos_weight
+        if self.pos_weight is not None:
+            self.pos_weight = torch.tensor(self.pos_weight).to(self.device)
 
         self.optimizer = self.optimizers[optimizer]
-        self.loss_fn = (nn.BCEWithLogitsLoss() if num_classes == 1 else nn.CrossEntropyLoss())
+        self.loss_fn = (torch.nn.BCELoss()
+                        if num_classes == 1 else torch.nn.CrossEntropyLoss())
+
         # Metrics
         self.accuracy = tm.Accuracy(task="binary").to(self.device)
 
         # Using a pretrained ResNet backbone
-        self.resnet_model = self.resnets[resnet_version]()
+        self.resnet_model = self.resnets[resnet_version](pretrained=pretrained)
 
         # Replace old FC layer with Identity to train own
         linear_size = list(self.resnet_model.children())[-1].in_features
 
         # replace final layer for fine-tuning
-        self.resnet_model.fc = nn.Linear(linear_size, num_classes)
-
+        self.resnet_model.fc = torch.nn.Sequential(
+            torch.nn.Linear(linear_size, num_classes),
+            torch.nn.Sigmoid() if num_classes == 1 else torch.nn.Softmax(dim=1)
+        )
         if tune_fc_only:  # option to only tune the fully-connected layers
             for child in list(self.resnet_model.children())[:-1]:
                 for param in child.parameters():
@@ -82,6 +92,7 @@ class ResNetClassifier(pl.LightningModule):
 
         loss = self.loss_fn(preds, y)
         acc = self.accuracy(preds, y)
+
         return loss, acc
 
     def _dataloader(self, data_path, shuffle=False):
