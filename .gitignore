@@ -250,3 +250,4 @@ models/
 .poetry_cache/
 
 !scripts/*
+!app/models/

@@ -1,0 +1,2 @@
+from app.service.controllers.classify import ImageClassifyController, UrlClassifyController
+from app.service.controllers.predict import ImagePredictController, UrlPredictController

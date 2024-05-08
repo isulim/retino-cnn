@@ -1,6 +1,6 @@
 *
 
-!src/
+!app/
 !models/
 !poetry.lock
 !poetry.toml
