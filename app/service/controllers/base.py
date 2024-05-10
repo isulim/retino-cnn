@@ -10,6 +10,7 @@ from pydantic import BaseModel
 
 from app.models.retino_cnn import RetinoCNNModel
 from app.service.schemas.requests import ImageFileRequest, ImageURLRequest
+from app.utils.errors import ImageFetchError
 
 
 class BaseController(Controller):
@@ -69,7 +70,7 @@ class BaseURLController(BaseController):
         image_response = requests.get(data.url, stream=True)
 
         if not image_response.ok:
-            raise ValueError(f"Failed to fetch image from URL: {data.url}")
+            raise ImageFetchError(data.url)
 
         return image_response.content
 
