@@ -1,13 +1,14 @@
-import logging
-
 from pathlib import Path
 
 import onnx
 from onnxruntime import InferenceSession
+
 from PIL import Image
 from torchvision import transforms
 
 from app.models.outputs import Category
+from app.utils.errors import InvalidOnnxModelError, ModelNotFoundError
+from app.service.events import logger
 
 
 class RetinoCNNModel:
@@ -91,19 +92,37 @@ class RetinoCNNModel:
         Returns:
             RetinoCNN model instance.
         """
-        logging.info(f"Loading RetinoCNN model from {path}")
+        logger.info(
+            event="CNN Model Load",
+            detail="Loading RetinoCNN model from path",
+            model_path=str(path)
+        )
         try:
             with path.open(mode="rb") as file:
+                name = file.name
                 model = onnx.load(file)
                 onnx.checker.check_model(model)
         except onnx.onnx_cpp2py_export.checker.ValidationError as exc:
-            logging.exception(f"RetinoCNN model constistency check failed.")
-            raise exc
-        except FileNotFoundError as exc:
-            logging.exception(f"RetinoCNN model not found in location {path}.")
-            raise exc
+            logger.error(
+                event="Invalid ONNX model",
+                detail=str(exc),
+                exception_type=type(exc),
+                path=str(path),
+            )
+            raise InvalidOnnxModelError from None
+        except FileNotFoundError:
+            logger.error(
+                event="File not found",
+                detail="RetinoCNN model not found in location",
+                path=str(path),
+            )
+            raise ModelNotFoundError from None
 
-        logging.info(f"Successfully loaded RetinoCNN model.")
+        logger.info(
+            event="Model Loaded",
+            detail="RetinoCNN model loaded",
+            model_name=name
+        )
         return InferenceSession(str(path))
 
     def _transform_image(self, image: Image) -> Image:

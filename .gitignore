@@ -249,5 +249,7 @@ runs/
 models/
 .poetry_cache/
 
-!scripts/*
+!scripts/
 !app/models/
+
+.DS_Store
